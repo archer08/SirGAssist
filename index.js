@@ -14,7 +14,7 @@ const { MessagingResponse } = require("twilio").twiml;
 const app = express();
 
 app.post("/sms", async (req, res) => {
-  const body = await req.body.Body;
+  const body = await req.body;
   console.log(body);
   const twiml = new MessagingResponse();
   // createMessage(Content, req.body.From, req.body.To);
