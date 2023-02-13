@@ -21,7 +21,7 @@ app.post("/sms", (req, res) => {
   res.type("text/xml").send(twiml.toString());
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT || 4000, () => {
   console.log("Express server listening on port 3000");
 });
 // const message = async () => {
