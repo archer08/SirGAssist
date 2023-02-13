@@ -1,35 +1,56 @@
+const { method } = require("lodash");
 const mongoose = require("mongoose");
 const { object, string, number, date, InferType, boolean } = require("yup");
 const { sendSms } = require("../twilio");
 
-const workerSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    unique: true,
-    minlength: 1,
-    maxlength: 50,
-    trim: true,
-    lowercase: true,
+const workerSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      unique: true,
+      minlength: 1,
+      maxlength: 50,
+      trim: true,
+      lowercase: true,
+    },
+    number: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      minlength: 10,
+      maxlength: 10,
+    },
+    status: {
+      type: String,
+      required: true,
+      default: "Available",
+      trim: true,
+    },
+    messages: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
+    task: {
+      type: String,
+      required: true,
+      default: "None",
+      trim: true,
+      lowercase: true,
+    },
+    skeduledTasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
   },
-  number: {
-    type: String,
-    required: true,
-    unique: true,
-    trim: true,
-    minlength: 10,
-    maxlength: 10,
-  },
-  messages: [{ type: mongoose.Schema.Types.ObjectId, ref: "Message" }],
-  task: {
-    type: String,
-    required: true,
-    default: "None",
-    trim: true,
-    lowercase: true,
-  },
-  skeduledTasks: [{ type: mongoose.Schema.Types.ObjectId, ref: "Task" }],
-});
+  {
+    timestamps: true,
+    methods: {
+      changeWorkerStatus(status) {
+        this.status = status;
+        this.save();
+      },
+      skeduleTask(task, worker) {},
+      updateTask(task, worker) {},
+      removeTask(task, worker) {},
+    },
+  }
+);
 workerSchema.post("save", (next) => {
   sendSms(
     "worker being saved",
