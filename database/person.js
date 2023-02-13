@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { date } = require("yup");
+// const { date } = require("yup");
 const { sendSms } = require("../twilio");
 
 const personSchema = new mongoose.Schema(
@@ -26,8 +26,9 @@ const personSchema = new mongoose.Schema(
   },
   {
     methods: {
-      sendSms(message, recipiant) {
+      sendSms(messageObj, recipiant) {
         sendSms(message, recipiant, process.env.TWILIO_PHONE_NUMBER);
+        this.messages.push(messageObj);
       },
       sendmultipleSms(message, recipiants) {},
       addReminder(reminder) {
