@@ -25,4 +25,14 @@ messageSchema.post("save", (next) => {
 });
 const Message = new Mongoose.model("Message", messageSchema);
 
-module.exports = { Message };
+const createMessage = (Content, From, To) => {
+  const message = Message.create({
+    Content: Content,
+    From: From,
+    To: To,
+    Tag: "Welcome",
+  });
+  return message;
+};
+
+module.exports = { Message, createMessage };

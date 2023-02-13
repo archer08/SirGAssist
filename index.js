@@ -6,15 +6,18 @@ connectDb();
 
 const { ToadScheduler, SimpleIntervalJob, Task } = require("toad-scheduler");
 const scheduler = new ToadScheduler();
-const { Message } = require("./database/messageModel");
+const { Message, createMessage } = require("./database/messageModel");
 
 const express = require("express");
 const { MessagingResponse } = require("twilio").twiml;
 
 const app = express();
 
-app.post("/sms", (req, res) => {
+app.post("/sms", async (req, res) => {
+  const body = await req.body.Body;
+  console.log(body);
   const twiml = new MessagingResponse();
+  // createMessage(Content, req.body.From, req.body.To);
 
   twiml.message("The Robots are coming! Head for the hills!");
 
