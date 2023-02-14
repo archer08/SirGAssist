@@ -4,7 +4,7 @@ const { Message } = require("./database/messageModel");
 const scheduler = new ToadScheduler();
 let messages = Message.find({ sent: false }, (err, messages) => {});
 const SendSms = new Task("check for messages and send them out", async () => {
-  messages.clone();
+  await messages.clone();
 
   // sendSms(
   //   "Hello World",
