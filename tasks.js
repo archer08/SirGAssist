@@ -13,5 +13,5 @@ const SendSms = new Task("check for messages and send them out", async () => {
     // );
   });
 });
-const job = new SimpleIntervalJob({ seconds: 1 }, SendSms);
+const job = new SimpleIntervalJob({ seconds: 5 }, SendSms);
 module.exports = { job };
