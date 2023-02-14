@@ -11,8 +11,8 @@ const SendSms = new Task("check for messages and send them out", async () => {
   //   process.env.MY_PHONE_NUMBER,
   //   process.env.TWILIO_PHONE_NUMBER
   // );
-  console.log(messages);
+  console.log(await messages);
   console.log("Hello World");
 });
-const job = new SimpleIntervalJob({ seconds: 1 }, SendSms);
+const job = new SimpleIntervalJob({ seconds: 5 }, SendSms);
 module.exports = { job };
