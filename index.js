@@ -12,9 +12,10 @@ const express = require("express");
 const { MessagingResponse } = require("twilio").twiml;
 
 const app = express();
+app.use(express.json());
 
 app.post("/sms", async (req, res) => {
-  const body = req.body.Body;
+  const body = req.body;
   console.log(body);
   const twiml = new MessagingResponse();
   // createMessage(Content, req.body.From, req.body.To);
