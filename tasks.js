@@ -2,9 +2,10 @@ const { ToadScheduler, SimpleIntervalJob, Task } = require("toad-scheduler");
 const { Message } = require("./database/messageModel");
 
 const scheduler = new ToadScheduler();
-let messages = await Message.find({ sent: false }, (err, messages) => {});
+let messages = Message.find({ sent: false }, (err, messages) => {});
 const SendSms = new Task("check for messages and send them out", async () => {
-  await messages.clone();
+  messages.clone();
+
   // sendSms(
   //   "Hello World",
   //   process.env.MY_PHONE_NUMBER,
