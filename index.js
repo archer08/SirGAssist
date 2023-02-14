@@ -10,6 +10,7 @@ const scheduler = new ToadScheduler();
 const { Message, createMessage } = require("./database/messageModel");
 
 const express = require("express");
+const { job } = require("./tasks");
 const { MessagingResponse } = require("twilio").twiml;
 
 const app = express();
@@ -52,4 +53,4 @@ app.listen(process.env.PORT || 4000, () => {
 // };
 // message();
 
-// scheduler.addSimpleIntervalJob(job);
+scheduler.addSimpleIntervalJob(job);
