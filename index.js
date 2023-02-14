@@ -17,8 +17,16 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post("/sms", async (req, res) => {
   const body = req.body;
-  console.log(body);
-  const twiml = new MessagingResponse();
+  if (body.Body.startsWith("/t")) {
+    const Content = body.Body.split(" ");
+    const SendNumber = Content[1];
+    const Message = Content[2];
+    createMessage(Message, process.env.TWILIO_PHONE_NUMBER, SendNumber);
+    twiml.message("message sent");
+    res.type("text/xml").send(twiml.toString());
+  }
+  // console.log(body);
+  // const twiml = new MessagingResponse();
   // createMessage(Content, req.body.From, req.body.To);
 
   twiml.message("The Robots are coming! Head for the hills!");
