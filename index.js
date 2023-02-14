@@ -16,6 +16,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.post("/sms", async (req, res) => {
+  const twiml = new MessagingResponse();
   const body = req.body;
   if (body.Body.startsWith("/t")) {
     const Content = body.Body.split(" ");
