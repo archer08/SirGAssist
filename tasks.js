@@ -1,5 +1,6 @@
 const { ToadScheduler, SimpleIntervalJob, Task } = require("toad-scheduler");
 const { Message } = require("./database/messageModel");
+const { sendSms } = require("./twilio");
 
 const scheduler = new ToadScheduler();
 let messages = Message.find({ sent: false }, (err, messages) => {});
@@ -8,7 +9,10 @@ const SendSms = new Task("check for messages and send them out", async () => {
 
   nm.forEach((message) => {
     if (message.sent === false) {
-      console.log(message);
+      sendSms(message.Content, message.To, message.From);
+      message.sent = true;
+      message.save();
+      console.log("Message sent");
       console.log("---------------------------");
     }
   });
