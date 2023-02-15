@@ -7,7 +7,7 @@ const SendSms = new Task("check for messages and send them out", async () => {
   const nm = await messages.clone();
 
   nm.forEach((message) => {
-    if (message.sent === true) {
+    if (message.sent === false) {
       console.log(message);
     }
   });
