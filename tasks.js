@@ -9,6 +9,7 @@ const SendSms = new Task("check for messages and send them out", async () => {
   nm.forEach((message) => {
     if (message.sent === false) {
       console.log(message);
+      console.log("---------------------------");
     }
   });
 
