@@ -9,9 +9,7 @@ const SendSms = new Task("check for messages and send them out", async () => {
 
   nm.forEach((message) => {
     if (message.sent === false) {
-      setTimeout((message) => {
-        sendSms(message.Content, message.To, message.From);
-      }, 1000);
+      setTimeout(sendSms(message.Content, message.To, message.From), 1000);
 
       message.sent = true;
       message.save();
